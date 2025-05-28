@@ -6,77 +6,75 @@
 
 ## 📌 프로젝트 개요
 
-이 프로젝트는 다음과 같은 DevOps 기술을 통합한 실습형 포트폴리오입니다:
+이 프로젝트는 **RHAAP(Red Hat Ansible Automation Platform)**을 기반으로  
+**Ansible → Terraform → KVM VM 자동 생성 → Kubernetes 구성 → GitOps 배포 → 모니터링/로깅**까지  
+DevOps의 엔드-투-엔드 전체 흐름을 실습하고 문서화하는 개인 포트폴리오입니다.
 
-- **인프라 자동화 (IaC)**: Terraform + cloud-init
-- **구성 관리**: Ansible
-- **컨테이너 오케스트레이션**: Kubernetes (kubeadm)
-- **배포 자동화**: GitHub Actions + ArgoCD (GitOps)
-- **모니터링/로깅**: Prometheus, Grafana, Loki
-- **샘플 앱**: Python Flask + PostgreSQL
+자동화된 VM 프로비저닝부터 GitOps 기반 애플리케이션 배포, 관측성(Observability)까지 포함하여 실무 수준에 가까운 인프라를 구현하는 것을 목표로 합니다.
 
 ---
 
-## 🧱 사용 스택
+## 🧱 사용 기술 스택
 
 | 범주 | 도구 |
 |------|------|
-| VM 자동화 | Terraform + libvirt |
-| 초기 셋업 | cloud-init, Ansible |
-| K8s 설치 | kubeadm, kubelet, kubectl |
-| GitOps | ArgoCD, GitHub Actions |
+| 인프라 자동화 | Terraform, Ansible (via RHAAP) |
+| 프로비저닝 실행 플랫폼 | Red Hat Ansible Automation Platform (RHAAP) |
+| 가상화 인프라 | KVM (libvirt) |
+| 클러스터 구성 | kubeadm, kubelet, kubectl |
+| GitOps | GitHub Actions, ArgoCD |
 | 모니터링 | Prometheus, Grafana |
-| 로깅 | Loki or EFK |
-| 배포 앱 | Flask + PostgreSQL |
-| 기타 | NGINX Ingress, HAProxy, Sealed Secrets |
+| 로깅 | Loki or EFK Stack |
+| 앱 | Python Flask + PostgreSQL |
+| 기타 | NGINX Ingress, HAProxy, Sealed Secrets, Cert-Manager |
 
 ---
 
-## 📁 디렉토리 구조
+## 📂 디렉토리 구조
 
 ```bash
 devops-fullstack-lab/
 │
-├── terraform/                  # KVM VM 생성 자동화
+├── terraform/
 │   └── kvm/
 │       ├── main.tf
 │       ├── variables.tf
 │       ├── outputs.tf
-│       └── cloud-init/
-│           └── user-data.yml
+│       └── cloud-init/user-data.yml
 │
-├── ansible/                    # 초기 설정 자동화
-│   ├── inventory.ini
+├── ansible/
+│   ├── inventories/
 │   ├── playbooks/
-│   │   └── setup-k8s.yml
+│   │   ├── run-terraform.yml        # Terraform 실행
+│   │   └── setup-vm.yml             # VM 초기 구성
 │   └── roles/
-│       └── base/
-│           └── tasks/
+│       └── terraform_runner/
+│           └── tasks/main.yml
 │
-├── k8s/                        # Kubernetes 배포 파일 및 Helm 차트
+├── k8s/
 │   ├── manifests/
 │   └── helm/
 │       └── flask-chart/
 │
-├── cicd/                       # CI/CD 자동화 설정
+├── cicd/
 │   └── github-actions/
 │       └── deploy.yml
 │
-├── monitoring/                # 모니터링/로깅 구성
+├── monitoring/
 │   ├── prometheus/
 │   ├── grafana/
 │   └── loki/
 │
-├── app/                        # 샘플 애플리케이션 (Flask)
+├── app/
 │   └── flask-api/
 │       ├── app.py
 │       ├── Dockerfile
 │       └── requirements.txt
 │
-├── secrets/                   # Sealed Secrets 또는 인증 정보 (비공개)
+├── secrets/
 │   └── sealed-secret.yaml
 │
-├── docs/                      # 설계 문서, 회고, 아키텍처 등
+├── docs/
 │   ├── architecture.png
 │   ├── setup-guide.md
 │   ├── workflow.md
