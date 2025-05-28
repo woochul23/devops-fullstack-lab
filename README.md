@@ -1,21 +1,88 @@
 # DevOps Fullstack Lab
 
-📦 **Terraform → Ansible → Kubernetes → GitOps → Monitoring**  
-이 프로젝트는 온프레미스 기반 DevOps 파이프라인을 실습하고 구성한 개인 기술 포트폴리오입니다.
+> 온프레미스 기반 DevOps 파이프라인 구축 실습 프로젝트입니다.
 
-## 🧱 프로젝트 구성
-- **인프라 자동화**: KVM + Terraform + cloud-init
+---
+
+## 📌 프로젝트 개요
+
+이 프로젝트는 다음과 같은 DevOps 기술을 통합한 실습형 포트폴리오입니다:
+
+- **인프라 자동화 (IaC)**: Terraform + cloud-init
 - **구성 관리**: Ansible
-- **Kubernetes 설치**: kubeadm
-- **GitOps 배포**: ArgoCD, GitHub Actions
+- **컨테이너 오케스트레이션**: Kubernetes (kubeadm)
+- **배포 자동화**: GitHub Actions + ArgoCD (GitOps)
 - **모니터링/로깅**: Prometheus, Grafana, Loki
+- **샘플 앱**: Python Flask + PostgreSQL
+
+---
+
+## 🧱 사용 스택
+
+| 범주 | 도구 |
+|------|------|
+| VM 자동화 | Terraform + libvirt |
+| 초기 셋업 | cloud-init, Ansible |
+| K8s 설치 | kubeadm, kubelet, kubectl |
+| GitOps | ArgoCD, GitHub Actions |
+| 모니터링 | Prometheus, Grafana |
+| 로깅 | Loki or EFK |
+| 배포 앱 | Flask + PostgreSQL |
+| 기타 | NGINX Ingress, HAProxy, Sealed Secrets |
+
+---
 
 ## 📁 디렉토리 구조
-(간략한 디렉토리 설명)
 
-## ⚠️ 주의사항
-- 개인 정보 및 키 파일은 `.gitignore`로 제외됨
-- 작업 중인 레포로 일부 구성이 변경될 수 있습니다
-
-## 🔓 공개 예정
-본 레포는 포트폴리오용 정리가 끝난 뒤 공개될 예정입니다.
+```bash
+devops-fullstack-lab/
+│
+├── terraform/                  # KVM VM 생성 자동화
+│   └── kvm/
+│       ├── main.tf
+│       ├── variables.tf
+│       ├── outputs.tf
+│       └── cloud-init/
+│           └── user-data.yml
+│
+├── ansible/                    # 초기 설정 자동화
+│   ├── inventory.ini
+│   ├── playbooks/
+│   │   └── setup-k8s.yml
+│   └── roles/
+│       └── base/
+│           └── tasks/
+│
+├── k8s/                        # Kubernetes 배포 파일 및 Helm 차트
+│   ├── manifests/
+│   └── helm/
+│       └── flask-chart/
+│
+├── cicd/                       # CI/CD 자동화 설정
+│   └── github-actions/
+│       └── deploy.yml
+│
+├── monitoring/                # 모니터링/로깅 구성
+│   ├── prometheus/
+│   ├── grafana/
+│   └── loki/
+│
+├── app/                        # 샘플 애플리케이션 (Flask)
+│   └── flask-api/
+│       ├── app.py
+│       ├── Dockerfile
+│       └── requirements.txt
+│
+├── secrets/                   # Sealed Secrets 또는 인증 정보 (비공개)
+│   └── sealed-secret.yaml
+│
+├── docs/                      # 설계 문서, 회고, 아키텍처 등
+│   ├── architecture.png
+│   ├── setup-guide.md
+│   ├── workflow.md
+│   ├── troubleshooting.md
+│   └── retrospective.md
+│
+├── .gitignore
+├── README.md
+└── LICENSE
