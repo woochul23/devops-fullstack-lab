@@ -4,7 +4,7 @@
 .terraform/
 terraform.tfvars
 
-# cloud-init iso (혹시 만들 경우 대비)
+# cloud-init iso (혹시 사용하는 경우)
 *.iso
 
 # SSH & 인증서 / 민감정보
@@ -13,6 +13,7 @@ terraform.tfvars
 *.crt
 *.enc
 secrets/
+ansible/inventories/
 ansible/inventory.ini
 
 # Python
@@ -26,7 +27,7 @@ __pycache__/
 *.env
 .env.*
 
-# VSCode (개인 IDE 설정)
+# VSCode (개인 설정)
 .vscode/
 .settings/
 
